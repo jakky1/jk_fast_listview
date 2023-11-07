@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 Future<int?> showIntInputDialog(BuildContext context, String title) async {
@@ -48,5 +46,4 @@ Future<String?> showInputDialog(BuildContext context, String title) async {
       );
     },
   );
-  return input;
 }

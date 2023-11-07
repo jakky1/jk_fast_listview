@@ -91,7 +91,7 @@ class JkFastListView extends BoxScrollView {
   /// Called every time when scrolling position changed.
   /// You can get the index of first visible item index here.
   /// Don't run time-consuming task.
-  final JkOnScrollPositionCallback? onScrollPosition; //TODO: implement it
+  final JkOnScrollPositionCallback? onScrollPosition;
 
   JkFastListView({
     super.key,
@@ -450,8 +450,8 @@ class _ChildManager {
   bool _isAlive = true;
   int _childCount = 0; // debug only, current children count
   int _separatorCount = 0; // debug only, current separator count
-  List<_ChildInfo> _bucket = [];
-  List<_ChildInfo> _tmpBucket = [];
+  final List<_ChildInfo> _bucket = [];
+  final List<_ChildInfo> _tmpBucket = [];
 
   void _addChildCount(bool isSeparator, int incValue) {
     if (!isSeparator) {
@@ -557,7 +557,6 @@ class _ChildManager {
 // child information, each item has one _ChildInfo
 // to keep position of child
 class _ChildInfo extends SliverMultiBoxAdaptorParentData {
-  bool _isActive = true;
   late _ChildManager _manager;
   Element? _parentElement;
   Element? _element;
@@ -567,7 +566,6 @@ class _ChildInfo extends SliverMultiBoxAdaptorParentData {
   Element get element => _element!;
   RenderBox get ro => _element!.renderObject as RenderBox;
   _ChildInfo? get separator => _separator;
-  bool get isActive => _isActive;
 
   double dx = 0; // screenX when vertical, or (screenX + offset) when horizontal
   double dy = 0; // screenY when horizontal, or (screenY + offset) when vertical
@@ -601,7 +599,6 @@ class _ChildInfo extends SliverMultiBoxAdaptorParentData {
   }
 
   void updateWidget(Widget newWidget) {
-    assert(_isActive);
     if (newWidget == _element?.widget) return;
 
     var e = _updateChild(element, newWidget, this);
@@ -610,7 +607,6 @@ class _ChildInfo extends SliverMultiBoxAdaptorParentData {
   }
 
   void updateSeparator(Widget? separatorWidget) {
-    assert(_isActive);
     if (separatorWidget == _separator?.element.widget) return;
     if (separatorWidget == null) {
       _separator?._doDestroy();
@@ -626,7 +622,6 @@ class _ChildInfo extends SliverMultiBoxAdaptorParentData {
   }
 
   void _doDestroy() {
-    assert(_isActive);
     _separator?._doDestroy();
     if (_element != null) {
       _updateChild(_element, null, null);
@@ -1487,7 +1482,6 @@ class _JkLazyViewportRenderObject extends RenderBox
   void paint(PaintingContext context, Offset offset) {
     super.paint(context, offset);
     for (var info in element.childInfoMap.values) {
-      if (!info.isActive) continue;
       assert(!info.ro.debugNeedsLayout); // cannot paint child if not layout yet
 
       Offset _translate(Offset point, double diff) {

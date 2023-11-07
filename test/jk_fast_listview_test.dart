@@ -1,13 +1,10 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:jk_fast_listview/jk_fast_listview.dart';
+//import 'package:flutter_test/flutter_test.dart';
+//import 'package:jk_fast_listview/jk_fast_listview.dart';
 //import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockJkFastListviewPlatform
     //with MockPlatformInterfaceMixin
     /*implements JkFastListviewPlatform*/ {
-
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
 }
 
 void main() {

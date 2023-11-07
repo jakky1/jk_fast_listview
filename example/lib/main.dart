@@ -110,16 +110,9 @@ class _MyAppState extends State<MyApp> {
             scrollDirection: Axis.horizontal,
             itemCount: value,
             itemBuilder: (context, index) {
-              if (true) return widgetList[index];
+              return widgetList[index];
               //if (true) return Text("test now $index");
               //log("widget created: $index");
-              Widget widget = MyItemWidget(index);
-              //widget = KeyedSubtree(key: ValueKey(index), child: widget);
-              widget = Container(
-                color: Colors.black12,
-                child: widget,
-              );
-              return widget;
             },
           );
         });
@@ -225,6 +218,7 @@ class MyItemWidgetState extends State<MyItemWidget>
   }
 
   bool stopAnimation = false;
+  @override
   @protected
   void didUpdateWidget(covariant MyItemWidget oldWidget) {
     super.didUpdateWidget(oldWidget);

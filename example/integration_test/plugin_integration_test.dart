@@ -10,7 +10,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:jk_fast_listview/jk_fast_listview.dart';
+//import 'package:jk_fast_listview/jk_fast_listview.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
