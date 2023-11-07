@@ -77,7 +77,7 @@ class JkItemController implements IJkItemController {
 typedef JkOnScrollPositionCallback = void Function(
     int firstIndex, double fisrtVisibleRatio);
 
-class JkFastListView extends ScrollView {
+class JkFastListView extends BoxScrollView {
   final NullableIndexedWidgetBuilder itemBuilder;
   final int itemCount;
   final IndexedWidgetBuilder? separatorBuilder;
@@ -107,6 +107,7 @@ class JkFastListView extends ScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
+    super.padding,
     required this.itemBuilder,
     required this.itemCount,
     this.separatorBuilder,
@@ -133,6 +134,11 @@ class JkFastListView extends ScrollView {
 
   @override
   List<Widget> buildSlivers(BuildContext context) => const [];
+
+  @override
+  Widget buildChildLayout(BuildContext context) {
+    throw UnimplementedError();
+  }
 
   @override
   Widget buildViewport(
