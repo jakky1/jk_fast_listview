@@ -14,7 +14,7 @@ ListView for Flutter. Support fast scrolling among a large amount of data, flexi
 ## Who need this package?
 
 - If all the items has the same width & height, please use official flutter [ListView][1] and [GridView][2]. Both classes work well with fixed-size items, also support fast scrolling among a large amount of data in this case.
-- If the width & height of items are variable, and you need to fast jump to far-far-away item (by call jumpToIndex / animateToIndex, or drag scrollbar by user), please use this package. This is useful for some applications (ex. chap app).
+- If the width & height of items are variable, and you need to fast jump to far-far-away item (by call jumpToIndex / animateToIndex, or drag scrollbar by user), please use this package. This is useful for some applications (ex. chat app).
 
 # Quick Start
 
