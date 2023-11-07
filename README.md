@@ -1,6 +1,6 @@
 # JkFastListView
 
-ListView for Flutter. Support fast scrolling among a large amount of data, flexible widget size, index-based scrolling, item recycler.
+ListView / GridView for Flutter. Support fast scrolling among a large amount of data, flexible widget size, index-based scrolling, item recycler.
 
 ## Features
 
