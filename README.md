@@ -96,11 +96,11 @@ var listview = JkFastListView(
 ## scrollTo / animateTo item with specified index
 
 ```
-// jump to
-itemController.jumpToIndex(100, alignment: 1); item with index 100
+// jump to item with index 1000
+itemController.jumpToIndex(1000, alignment: 1);
 
 // like 'jumpToIndex', but with animation
-itemController.animateToIndex(100,
+itemController.animateToIndex(1000,
   alignment: 1,
   duration: const Duration(milliseconds: 300),
   curve: Curves.easeIn);
