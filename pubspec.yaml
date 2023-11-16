@@ -1,13 +1,13 @@
 name: jk_fast_listview
 description: ListView for Flutter. Support fast scrolling among a large amount of data, flexible widget size, index-based scrolling, item recycler.
-version: 0.8.0
+version: 0.8.1
 homepage: https://github.com/jakky1/jk_fast_listview
 repository: https://github.com/jakky1/jk_fast_listview
 issue_tracker: https://github.com/jakky1/jk_fast_listview/issues
 
 environment:
   sdk: '>=2.17.0 < 4.0.0'
-  flutter: ">=2.10.0"
+  flutter: ">=3.16.0"
 
 dependencies:
   flutter:

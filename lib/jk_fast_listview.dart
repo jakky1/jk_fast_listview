@@ -1527,11 +1527,15 @@ class _JkLazyViewportRenderObject extends RenderBox
     return false;
   }
 
+  /// API changed from flutter 3.16.0 (or 3.14.0 ?)
   @override
-  RevealedOffset getOffsetToReveal(RenderObject target, double alignment,
-      {Rect? rect}) {
+  RevealedOffset getOffsetToReveal(
+    RenderObject target,
+    double alignment, {
+    Rect? rect,
+    Axis? axis,
+  }) {
     // called by FocusTraversalPolicy._moveFocus, Scrollable.ensureVisible
-
     RenderObject childRO = target;
     while (childRO.parent != this) {
       childRO = childRO.parent!;

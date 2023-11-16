@@ -1,0 +1,43 @@
+- 若 sliver 之前還有其他 sliver，且尚未捲動到此 sliver 的開頭前，仍會被呼叫到 performLayout() 一兩次，
+  此時仍要透過 SliverGeometry 回報此 sliver 預估的總長度，
+  此時的 constraints.scrollOffset 為 0，
+  remainingPaintExtent 為此 sliver 可見區域的長度
+  若前面 sliver 太長而還沒捲動到此 sliver 時，remainingPaintExtent 為 0
+- 若捲動到超過此 sliver 範圍後，performLayout() 仍會被持續呼叫，
+  此時的 scrollOffset 會超過此 sliver 的 scrollExent 範圍，
+  若捲的太後面造成此 sliver 不可見，則 remainingPaintExtent 為 0
+- remainingPaintExtent:
+  若捲的太前面導致此 sliver invisible 則為 0
+  若捲超過此 sliver 開端，則為一個固定的正直 (應該是 Viewport height - overlap ?)
+
+== SliverConstraints ==
+
+- scrollOffset: 此 sliver 的 scrollOffset，從 0 開始，0 代表此 sliver 第一個 item 的起點
+- remainingPaintExtent: 此 sliver 最多可畫多大的範圍
+- cacheOrigin: 必須 <= 0，cache 的起點，相對於 scrollOffset
+- remainingCacheExtent: 必須 >= remainingPaintExtent
+  cache 區域從 (scrollOffset-cacheOrigin) 到 (scrollOffset-cacheOrigin+remainingCacheExtent)
+- overlap: 等於 geometry 的 paintExtent - layoutExtent，應該是被前一個 sliver (例如 float appbar) 占用的長度
+
+- crossAxisExtent, crossAxisDirection, axisDirection, growthDirection, userScrollDirection
+- precedingScrollExtent: 在此 sliver 之前 (不含此 sliver) 的所有 sliver 的總長度，感覺沒啥用途
+- viewportMainAxisExtent: vertical 時代表 viewport 的高度
+
+
+
+== SliverGeometry ==
+
+- maxPaintExtent: 此 sliver 的所有 children 的總長度 (預估)，不能小於 paintExtent
+- scrollExtent: 數值必須和 maxPaintExtent 相同 (官方的 RenderSliverList 也是這樣設計)
+- paintExtent: 在這次 paint() 時畫了多少長度，此數值不會影響到下個 sliver 的位置，但 layoutExtent 會
+  必須介於 0 到 remainingPaintExtent 之間
+- cacheExtent: 必須 >= layoutExtent，此 sliver 吃掉了 remainingCacheExtent 裡的多少長度，不太懂
+- scrollOffsetCorrection: 若為 0，代表要求 viewport 將 offset 加上 scrollOffsetCorrection
+
+- maxScrollObstructionExtent: 若此 sliver not pinned 設為 0，若為 pinned 代表 pinned 時的長度
+- hasVisualOverflow: 是否需要 clip 此 sliver
+- hitTestExtent: 必須介於 0~paintExtent，預設為paintExtent
+- layoutExtent: 下一個 sliver 會被放置在此 sliver 之後 layoutExtent 個 pixel，不指定時預設為 paintExtent
+  必須介於 0 到 paintExtent 之間
+- paintOrigin: 0 代表從 sliver layout 的位置開始畫，< 0 代表提前多少長度畫，一般而言沒啥用
+- visible: 設定此 sliver 是否可見

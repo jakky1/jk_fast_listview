@@ -63,17 +63,18 @@ class _MyAppState extends State<MyApp> {
   }
 
   final scrollController = ScrollController();
-  final itemController = JkItemController(initialIndex: 1000, alignment: null);
+  //final itemController = JkItemController();
+  final itemController = JkItemController(initialIndex: 1000, alignment: 0.5);
   final itemCountValue = ValueNotifier<int>(initialItemCount);
 
-  @override
-  Widget build(BuildContext context) {
-
+  Widget buildListView(BuildContext context) {
     Widget list = ValueListenableBuilder<int>(
         valueListenable: itemCountValue,
         builder: (context, value, child) {
           log("ListView rebuild now");
+
           return JkFastListView(
+            //return JkFastSliverList(
             itemController: itemController,
             onScrollPosition: (index, ratio) {
               //log("onScroll: item $index, visible: $ratio, ${itemController.getFirstVisibleIndex()}");
@@ -106,9 +107,10 @@ class _MyAppState extends State<MyApp> {
 
             controller: scrollController,
             cacheExtent: 300,
-            //reverse: true,
+            reverse: true,
             scrollDirection: Axis.horizontal,
             itemCount: value,
+            //itemCount: 300000,
             itemBuilder: (context, index) {
               return widgetList[index];
               //if (true) return Text("test now $index");
@@ -117,6 +119,12 @@ class _MyAppState extends State<MyApp> {
           );
         });
 
+    return list;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget list = buildListView(context);
     list = Scrollbar(
       controller: scrollController,
       child: list,
@@ -141,7 +149,7 @@ class _MyAppState extends State<MyApp> {
               //itemController.jumpToIndex(num, alignment: 0.5);
 
               itemController.animateToIndex(num,
-                  alignment: 0.5,
+                  alignment: 1,
                   duration: const Duration(milliseconds: 2000),
                   curve: Curves.easeIn);
             }
