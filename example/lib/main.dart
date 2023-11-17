@@ -1,4 +1,7 @@
+// ignore_for_file: unnecessary_overrides
+
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:jk_fast_listview/jk_fast_listview.dart';
@@ -158,6 +161,13 @@ class _MyAppState extends State<MyApp> {
     ]);
 
     Widget body = Column(children: [controls, Expanded(child: list)]);
+
+    body = ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse,
+        }),
+        child: body);
 
     return Scaffold(
       appBar: AppBar(

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides
+
 import 'dart:developer';
 import 'dart:math' as math;
 
@@ -184,7 +186,6 @@ class _JkLazyViewport extends RenderObjectWidget {
   final JkOnScrollPositionCallback? onScrollPosition;
 
   const _JkLazyViewport({
-    super.key,
     required this.offset,
     required this.itemBuilder,
     required this.itemCount,
@@ -426,6 +427,7 @@ class _JkLazyViewportRenderObjectElement extends RenderObjectElement {
   void insertRenderObjectChild(
       covariant RenderObject child, covariant _ChildInfo slot) {
     // these two lines must be here to enable item animation
+    // ignore: invalid_use_of_protected_member
     renderObject.adoptChild(child);
     child.parentData = slot;
   }
@@ -440,6 +442,7 @@ class _JkLazyViewportRenderObjectElement extends RenderObjectElement {
   void removeRenderObjectChild(
       covariant RenderObject child, covariant Object? slot) {
     // this lines must be here to enable item animation
+    // ignore: invalid_use_of_protected_member
     renderObject.dropChild(child);
   }
 }
@@ -579,6 +582,7 @@ class _ChildInfo extends SliverMultiBoxAdaptorParentData {
   Element? _updateChild(Element? child, Widget? newWidget, Object? newSlot) {
     Element? e;
     _parentElement!.owner!.lockState(() {
+      // ignore: invalid_use_of_protected_member
       e = _parentElement!.updateChild(child, newWidget, newSlot);
     });
     return e;
@@ -638,8 +642,6 @@ class _ChildInfo extends SliverMultiBoxAdaptorParentData {
 
 class _JkLazyViewportRenderObject extends RenderBox
     implements RenderAbstractViewport, IJkItemController {
-  // TODO: check this issue: https://juejin.cn/post/7134167647788204045
-
   final _JkLazyViewportRenderObjectElement element;
   ViewportOffset offset = ViewportOffset.zero();
 
@@ -1484,7 +1486,7 @@ class _JkLazyViewportRenderObject extends RenderBox
     for (var info in element.childInfoMap.values) {
       assert(!info.ro.debugNeedsLayout); // cannot paint child if not layout yet
 
-      Offset _translate(Offset point, double diff) {
+      Offset translate(Offset point, double diff) {
         return isVertical ? point.translate(0, diff) : point.translate(diff, 0);
       }
 
@@ -1496,7 +1498,7 @@ class _JkLazyViewportRenderObject extends RenderBox
 
         // paint separator if exists
         if (info.separator != null) {
-          screenXY = _translate(screenXY, info.contentLength);
+          screenXY = translate(screenXY, info.contentLength);
           context.paintChild(info.separator!.ro, screenXY);
         }
       } else {
@@ -1505,7 +1507,7 @@ class _JkLazyViewportRenderObject extends RenderBox
 
         // paint separator if exists
         if (info.separator != null) {
-          screenXY = _translate(screenXY, -info.separator!.contentLength);
+          screenXY = translate(screenXY, -info.separator!.contentLength);
           context.paintChild(info.separator!.ro, screenXY);
         }
       }
@@ -1697,7 +1699,7 @@ class _JkLazyViewportRenderObject extends RenderBox
       return;
     }
 
-    Future<void> _doScrollTo(double pixels) async {
+    Future<void> doScrollTo(double pixels) async {
       if (duration == null) {
         offset.jumpTo(pixels);
       } else {
@@ -1715,7 +1717,7 @@ class _JkLazyViewportRenderObject extends RenderBox
     if (firstRowIndex <= targetRowIndex && targetRowIndex <= lastRowIndex) {
       // if target is in visible area
       double distance = getDistanceToIndex(index, alignment: alignment)!;
-      await _doScrollTo(offset.pixels + distance);
+      await doScrollTo(offset.pixels + distance);
     } else {
       // if target is not in visible area
 
@@ -1728,7 +1730,7 @@ class _JkLazyViewportRenderObject extends RenderBox
         // if not too far, create rows and scroll
         growRowsUntilIndex(index);
         double distance = getDistanceToIndex(index, alignment: alignment)!;
-        await _doScrollTo(offset.pixels + distance);
+        await doScrollTo(offset.pixels + distance);
       }
     }
   }
